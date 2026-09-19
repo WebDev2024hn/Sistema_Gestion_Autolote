@@ -1,5 +1,8 @@
 const express = require('express');
 const app = express();
+const pool = require('./config/db.js');
+const AuthRoute = require('./routes/AuthRoute.js');
+
 const PORT = 3000;
 
 const vehiculos = require('./routes/vehiculos');
@@ -9,6 +12,7 @@ const apitercero = require('./routes/apitercero');
 
 app.use(express.json());
 
+app.use('/', AuthRoute);
 app.use('/vehiculos', vehiculos);
 app.use('/clientes', clientes);
 app.use('/consultas', consultas);
