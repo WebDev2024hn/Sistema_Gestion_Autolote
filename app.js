@@ -5,6 +5,7 @@ const AuthRoute = require('./routes/AuthRoute.js');
 
 const PORT = 3000;
 
+const verificarToken = require('./middleware/authMiddleware.js');
 const vehiculos = require('./routes/vehiculos');
 const clientes = require('./routes/clientes');
 const consultas = require('./routes/consultas');
@@ -17,6 +18,14 @@ app.use('/vehiculos', vehiculos);
 app.use('/clientes', clientes);
 app.use('/consultas', consultas);
 app.use('/apitercero', apitercero);
+
+app.get('/perfil', verificarToken, (req, res) => {
+    res.json({
+        status: 200,
+        message: 'Acceso autorizado',
+        usuario: req.user
+    });
+});
 
 app.get('/', (req, res) => {
     res.json({

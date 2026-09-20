@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const conexionDB = require('../config/db');
+const verificarToken = require('../middleware/authMiddleware');
 
-router.get('/', (req, res)=>{
+router.get('/', verificarToken, (req, res)=>{
     const sql = "SELECT * FROM clientes";
 
     conexionDB.query(sql, (error, results)=>{
@@ -15,7 +16,7 @@ router.get('/', (req, res)=>{
     })
 })
 
-router.post('/', (req, res)=>{
+router.post('/', verificarToken, (req, res)=>{
     const nombre = req.body.nombre;
     const apellido = req.body.apellido;
     const correo = req.body.correo;
@@ -35,7 +36,7 @@ router.post('/', (req, res)=>{
     })
 });
 
-router.put('/:id', (req, res)=>{
+router.put('/:id', verificarToken, (req, res)=>{
     const id= req.params.id;
     const nombre = req.body.nombre;
     const apellido = req.body.apellido;
@@ -56,7 +57,7 @@ router.put('/:id', (req, res)=>{
     })
 });
 
-router.delete('/:id', (req, res)=>{
+router.delete('/:id', verificarToken, (req, res)=>{
     const id = req.params.id;
 
     const sql = "DELETE FROM clientes WHERE id_cliente=?";
