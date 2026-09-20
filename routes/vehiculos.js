@@ -1,19 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const conexionDB = require('../config/db');
-
-/* router.get('/', (req, res) => {
-    const sql = "SELECT * FROM vehiculos";
-
-    conexionDB.query(sql, (error, results) => {
-        if (error) {
-            res.status(500).json({ status: 500, message: "Error en la consulta" });
-        }
-        else {
-            res.status(200).json({ status: 200, message: "Consulta exitosa", data: results });
-        }
-    })
-}); */
+const verificarToken = require('../middleware/authMiddleware');
 
 router.get('/:id', (req, res) => {
     const id = req.params.id;
@@ -57,7 +45,7 @@ router.get('/', (req, res) => {
 });
 
 
-router.post('/', (req, res) => {
+router.post('/', verificarToken, (req, res) => {
     const marca = req.body.marca;
     const modelo = req.body.modelo;
     const anio = req.body.anio;
@@ -78,7 +66,7 @@ router.post('/', (req, res) => {
     })
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', verificarToken, (req, res) => {
     const id = req.params.id;
     const marca = req.body.marca;
     const modelo = req.body.modelo;
@@ -100,7 +88,7 @@ router.put('/:id', (req, res) => {
     })
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', verificarToken, (req, res) => {
     const id = req.params.id;
 
     const sql = "DELETE FROM vehiculos WHERE id_vehiculo=?";

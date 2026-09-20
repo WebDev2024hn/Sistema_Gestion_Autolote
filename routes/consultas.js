@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const conexionDB = require('../config/db');
+const verificarToken = require('../middleware/authMiddleware');
 
-router.post('/', (req, res) => {
+router.post('/', verificarToken, (req, res) => {
     const id_cliente = req.body.id_cliente;
     const id_vehiculo = req.body.id_vehiculo;
     const fecha = req.body.fecha; 
@@ -21,7 +22,7 @@ router.post('/', (req, res) => {
     });
 });
 
-router.get('/historial/:id_cliente', (req, res) => {
+router.get('/historial/:id_cliente', verificarToken, (req, res) => {
     const id_cliente = req.params.id_cliente;
     
     const sql = "SELECT * FROM consultas WHERE id_cliente = ?";
