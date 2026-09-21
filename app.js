@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const pool = require('./config/db.js');
 const AuthRoute = require('./routes/AuthRoute.js');
+const cors = require('cors');
 
 const PORT = 3000;
 
@@ -12,6 +13,7 @@ const consultas = require('./routes/consultas');
 const apitercero = require('./routes/apitercero');
 
 app.use(express.json());
+app.use(cors());
 
 app.use('/', AuthRoute);
 app.use('/vehiculos', vehiculos);
